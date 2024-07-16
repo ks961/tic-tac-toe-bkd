@@ -203,6 +203,18 @@ export default class IdentityService {
             }
 
             creds.usernameOrEmail = (rows as any)[0]["email"];
+        } else {
+            
+            const rows = await getDataFromDatabase({
+                table: TABLES.users,
+                conditionalColumns: ["email"],
+                values: [creds.usernameOrEmail],
+                selectColumns: ["email"]
+            });
+
+            if(Array.isArray(rows) && rows.length <= 0) {
+                throw new RuntimeError("Email doesn't exists.", 404);
+            }
         }
 
         const otpService = new OtpServiceViaEmail(

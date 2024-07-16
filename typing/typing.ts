@@ -128,3 +128,7 @@ export type VerificationCredential = {
     sessionId: string,
 }
 
+export type RateLimit = {
+    lastVisit: string,
+    visitCount: number,
+}
