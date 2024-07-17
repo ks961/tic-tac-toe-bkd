@@ -1,11 +1,8 @@
-import { frontendDomain } from "config/frontend";
 import type { Request, Response } from "express";
-import { sign } from "jsonwebtoken";
 import { getPlayerIdByEmailOrUsername } from "models/db/player";
 import type { LoginCredentialDTO, OtpVerificationDTO, UpdatePasswordDTO, UserIndentifierDTO } from "models/DTOs/login";
 import IdentityService from "services/Identity";
 import { RuntimeError, type ClientRequest, type JwtPayload, type LoginSuccessPayload, type ServerResponse } from "typing/typing";
-import { isDevEnvironment } from "utils";
 
 
 
@@ -46,7 +43,8 @@ export async function loginController(req: Request, res: Response) {
         }
     
     } catch(err) {
-
+        console.log(err);
+        
         if(err instanceof RuntimeError) {
             response = {
                 status: err.statusCode ? err.statusCode : 500,
